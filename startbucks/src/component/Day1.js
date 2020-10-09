@@ -24,8 +24,23 @@ function Day1() {
             name: "",
         });
     };
+    const handleRemove = (index) => {
+        setState({
+            names: names.filter((item, i) => i !== index),
+            name: "",
+        });
+    };
     const nameList = names.map((name, index) => <li key={index}>{name}</li>);
-    const nameList2 = names.map((name, index) => <li key={index}>{name}</li>);
+    const nameList2 = names.map((name, index) => (
+        <li
+            key={index}
+            onDoubleClick={() => {
+                handleRemove(index);
+            }}
+        >
+            {name}
+        </li>
+    ));
     return (
         <>
             <h1>day_1 - 배움point(배열의 렌더링)</h1>
@@ -140,6 +155,78 @@ function Day1() {
                     <input type="button" value="추가" onClick={handleInsert} />
                     <ul>{nameList2}</ul>
                 </blockquote>
+                <div>
+                    onDoubleClick이라는 이벤트를 사용해서 요소를 두번 클릭하면
+                    사라지는 기능을 구현할 것이다.
+                </div>
+                <blockquote>
+                    {`const nameList2 = names.map((name, index) => (
+        <li
+            key={index}
+            onDoubleClick={() => {
+                handleRemove(index);
+            }}
+        >
+            {name}
+        </li>
+    ));`}
+                </blockquote>
+                <div>
+                    이렇게 위에 랜더링 할때 handleRemove라는 함수에 key값인
+                    index를 전달하면 몇번째 배열을 filtering할 것인지 전달할 수
+                    있다.
+                </div>
+                <blockquote>{`
+        const handleRemove = (index) => {
+            setState({
+                names: names.filter((item, i) => i !== index),
+                name: "",
+            });
+        };`}</blockquote>
+                <div>
+                    다음은 handleRemove로직이다. index라는 값을 요구하며, 이
+                    매서드가 실행하면 setState를 실행하는데 names배열의 값을
+                    filtering할 filter라는 매서드를 실행한다.
+                </div>
+                <div>
+                    filter함수는 callback함수를 요구하는데 item과 i를 받는다.
+                    이때 item은 순회하는 배열의 인자값을 의미하며 index는 그
+                    인자값의 인덱스를 의미한다.
+                </div>
+                <div>
+                    <strong>
+                        그래서 위 filter함수를 간단히 서술해보면 전달받은 삭제할
+                        index값이 i랑 같을때 그 값을 거른 배열을 리턴한다는
+                        의미이다.
+                    </strong>
+                </div>
+                <div></div>
+                <hr />
+
+                <h3>완성본</h3>
+                <blockquote>
+                    <input
+                        type="text"
+                        onChange={handleChange}
+                        value={state.name}
+                    />
+                    <input type="button" value="추가" onClick={handleInsert} />
+
+                    <ul>{nameList2}</ul>
+                </blockquote>
+            </div>
+            <div className="learning_box">
+                <h4>
+                    이렇게 스타벅스에서 배열을 렌더링하는 방법에 대해서 공부해
+                    보았다. 사실 학교나 집에서는 분위기가 좋지못해서 공부하는데
+                    방해가 되었지만 스타벅스에서 코딩을 해보니 확실히 공부가
+                    잘되는 느낌이 있다.
+                </h4>
+                <h4>
+                    앞으로 학교에서 집에 귀가하는 날에는 스타벅스에 출석하는
+                    시간을 가져야 할 필요성이 있다고 생각했다.
+                </h4>
+                <h1>"너무 갬성이 좋다아~~"</h1>
             </div>
         </>
     );
